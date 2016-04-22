@@ -1,4 +1,5 @@
 
+
 /**幸运抽奖
  * @author haoyujing
  */
@@ -17,11 +18,21 @@ public class Lucky {
 	static int[] mid = new int[10];// 用于记录用户的会员号
 	static int[] ran = new int[5];// 用于记录幸运号码
 	static Random r=new Random();//生成随机数
+	static String yn=null;
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
+		boolean flag=true;
 		for (int i = 0; i < 5; i++) {// 生成五个幸运号码
 			//ran[i] = (int) (Math.random() * 10);
-			ran[i]=r.nextInt(1000);
+			ran[i]=r.nextInt(9000)+1000;
+			do{//排除生成相同随机数
+			for (int j =0; j<i;j++) {//判断生成的随机数是否与数组中的随机数相同
+				if(ran[i]==ran[j])
+					flag=false;
+			}
+			if(flag==false)//生成的随机数重复
+			ran[i]=r.nextInt(9000)+1000;
+			}while(flag==false);
 		}
 		while (true) {
 			System.out.println("***********欢迎进入幸运抽奖系统************");
@@ -47,6 +58,12 @@ public class Lucky {
 			return;
 
 			}
+			System.out.println("是否继续[y/n]：");
+			yn=input.next();
+			if(yn.equalsIgnoreCase("n")){
+				System.out.println("系统退出，谢谢使用");
+				return;
+			}
 
 		}
 	}
@@ -59,7 +76,7 @@ public class Lucky {
 		System.out.println("注册成功！");
 		System.out.print("会员号为：");
 		//mid[n] = (int) (Math.random() * 10);
-		mid[n]=r.nextInt(1000);
+		mid[n]=r.nextInt(1000)+1000;
 		System.out.println(mid[n]);
 		n++;
 		
@@ -81,14 +98,7 @@ for (int i = 0; i < 3; i++) {// 限制登录次数
 		System.out.println("登陆成功！");
 		id = mid[k];
 		System.out.println("会员号为：" + id);
-		System.out.println("是否继续[y/n]：");
-		result=input.next();
-		if(result.equals("y"))
-			break;// 跳出switch进入主界面
-		else{
-			System.out.println("系统退出，谢谢使用");							
-			return;
-		}
+		break;
 	}
 	if (i >= 2) {
 		System.out.println("超出登陆次数！");
@@ -110,4 +120,3 @@ for (int i = 0; i < 3; i++) {// 限制登录次数
 
 	}}
 }
-//
